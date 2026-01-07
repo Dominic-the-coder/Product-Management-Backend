@@ -4,6 +4,8 @@ const userRoutes = require("./routes/UserRoute");
 const productRoutes = require("./routes/ProductRoute");
 const jwt = require("jsonwebtoken");
 
+require("dotenv").config();
+
 const app = express();
 app.use(express.json());
 
@@ -39,7 +41,7 @@ function verifyToken(req, res, next) {
 
     const token = authHeader.split(" ")[1];
 
-    jwt.verify(token, "b6cb51bb316247931eeb66d77c7cb2a72de62c19a7fb2a9b64da35843902424955cc77b9fd35efb19703ba76628897041856e60eb4f3e7445233b3269adec5ec", (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
         next();

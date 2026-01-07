@@ -19,7 +19,7 @@ async function verifyToken(req, res, next) {
             return res.status(401).json({ message: "Malformed token" });
         }
 
-        const decoded = jwt.verify(token, "b6cb51bb316247931eeb66d77c7cb2a72de62c19a7fb2a9b64da35843902424955cc77b9fd35efb19703ba76628897041856e60eb4f3e7445233b3269adec5ec");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded; // attach user info to request
         next();
     } catch (err) {
